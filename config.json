@@ -7,10 +7,10 @@
     "client": {
         "host": "127.0.0.1",
         "port": 5000,
-        "name": "aaa",
+        "name": "Test1",
         "password": ""
     },
     "setup": {
-        "language": "en-us"
+        "language": "zh-cn"
     }
 }
