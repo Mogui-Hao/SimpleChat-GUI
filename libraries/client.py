@@ -26,11 +26,13 @@ class ClientTCP(socket.socket):
     def GetMessage(self):
         try:
             while ...:
-                date = loads(self.recv(pow(2, 25)).decode("utf-8"))
+                date = self.recv(pow(2, 25))
+                print(date)
+                date = loads(date.decode("utf-8"))
                 if (self.Qualified(date)):
                     self.terminal.log(f'{date["sender"]}: {date["message"]}', MessageType.Info if date["sender"] != self.name else MessageType.Me)
         except Exception as e:
-            self.terminal.log(f"Traceback (most recent call last):\n{format_exc().split()}{format_exception_only(type(e), e)[0].strip()}", MessageType.Error)
+            self.terminal.log(f"Traceback (most recent call last):\n{format_exc()}{format_exception_only(type(e), e)[0]}", MessageType.Error)
     
     def SendMessage(self, message):
         try:
@@ -41,7 +43,7 @@ class ClientTCP(socket.socket):
             }).encode("utf-8")
             self.send(date)
         except Exception as e:
-            self.terminal.log(f"Traceback (most recent call last):\n{format_exc().split()}{format_exception_only(type(e), e)[0].strip()}", MessageType.Error)
+            self.terminal.log(f"Traceback (most recent call last):\n{format_exc()}{format_exception_only(type(e), e)[0]}", MessageType.Error)
     
     def Qualified(self, message: dict):
         if ("message" in message and "sender" in message):
