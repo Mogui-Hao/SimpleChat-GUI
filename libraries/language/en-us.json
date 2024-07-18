@@ -1,0 +1,56 @@
+{
+    "info": {
+        "name": "English",
+        "version": "1.0.0"
+    },
+    "date": {
+        "tab": [
+            "Create",
+            "Connect",
+            "Terminal",
+            "Settings",
+            "About"
+        ],
+        "server": [
+            "Address",
+            "Port",
+            "Room Password",
+            "Create Room",
+            "Creating Room",
+            "Close Room"
+        ],
+        "client": [
+            "Address",
+            "Port",
+            "Room Password",
+            "Name",
+            "Join Room",
+            "Joining Room",
+            "Leave Room"
+        ],
+        "terminal": {
+            "infoType": [
+                "Message",
+                "Command(/)",
+                "Send"
+            ],
+            "server": [
+                "Creating room.",
+                "No plugins.",
+                "Bound to %s:%d address.",
+                "Room created.",
+                "Address %s:%d joined the room.",
+                "%s: %s",
+                "Room closed."
+            ],
+            "client": [
+                "Incorrect address, please check if the address is correct."
+            ]
+        },
+        "setup": [
+            "Language: ",
+            "Save"
+        ],
+        "about": []
+    }
+}
