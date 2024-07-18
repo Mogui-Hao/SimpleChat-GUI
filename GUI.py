@@ -3,6 +3,7 @@ from os import makedirs
 from os.path import exists
 from json import dumps, loads
 from threading import Thread
+from tkinter.messagebox import showwarning
 import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
 import requests
@@ -35,6 +36,15 @@ else:
 ServerConfig = Config["server"]
 ClientConfig = Config["client"]
 SetUpConfig = Config["setup"]
+
+def isType(obj, type_):
+    if type_ == int:
+        try:
+            if int(obj) == float(obj):
+                return True
+            return False
+        except:
+            return
 
 class Windows(ttk.Window):
     def __init__(self,
@@ -86,13 +96,18 @@ class Windows(ttk.Window):
         self.mainloop()
 
     def StartServer(self):
-        self.Save()
         if not self.TCP is None:
             self.ClientButton.config(state=NORMAL)
             self.ServerButton.config(text=self.Language["server"][3], state=NORMAL)
             self.TerminalSendButton.config(state=DISABLED)
             self.TCP.close()
             return
+        if (self.ServerPortEntry.get().strip() == "" or
+            self.ServerHostEntry.get().strip() == "" or
+            not isType(self.ServerPortEntry.get(), int)):
+            showwarning("警告", "请确保必要信息格式类型正确")
+            return
+        self.Save()
         self.TerminalOutputText.config(state=NORMAL)
         self.TerminalOutputText.delete("1.0", END)
         self.TerminalOutputText.config(state=DISABLED)
@@ -103,13 +118,18 @@ class Windows(ttk.Window):
         GetUser.daemon = True
         GetUser.start()
         self.ServerButton.config(text=self.Language["server"][5], state=NORMAL)
-        self.TerminalSendButton.config(state=NORMAL)
+        # self.TerminalSendButton.config(state=NORMAL)
 
     def StartClient(self):
+        if (self.ServerPortEntry.get().strip() == "" or
+            self.ServerHostEntry.get().strip() == "" or
+            not isType(self.ServerPortEntry.get(), int)):
+            showwarning("警告", "请确保必要信息格式类型正确")
+            return
         self.Save()
         if not self.TCP is None:
-            self.ServerButton.config(state=NORMAL)
-            self.ClientButton.config(text=self.Language["client"][5], state=NORMAL)
+            self.ClientButton.config(state=NORMAL)
+            self.ServerButton.config(text=self.Language["server"][3], state=NORMAL)
             self.TerminalSendButton.config(state=DISABLED)
             self.TCP.close()
             return
