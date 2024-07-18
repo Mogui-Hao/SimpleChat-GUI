@@ -19,7 +19,7 @@ class ClientTCP(socket.socket):
         }).encode("utf-8"))
         date = self.recv(pow(2, 25)).decode("utf-8")
         for info in loads(date):
-            self.terminal.log(f'{info["sender"]}: {info["message"]}')
+            self.terminal.log(f'{info["sender"]}: {info["message"]}', MessageType.Info if info["sender"] != self.name else MessageType.Me)
         # self.terminal.log(language[0], Type=MessageType.Error)
         # self.error = True
 
@@ -27,7 +27,6 @@ class ClientTCP(socket.socket):
         try:
             while ...:
                 date = self.recv(pow(2, 25))
-                print(date)
                 date = loads(date.decode("utf-8"))
                 if (self.Qualified(date)):
                     self.terminal.log(f'{date["sender"]}: {date["message"]}', MessageType.Info if date["sender"] != self.name else MessageType.Me)
