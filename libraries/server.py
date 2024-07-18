@@ -27,6 +27,8 @@ class ServerTCP(socket.socket):
                 Client, Addr = self.accept()
                 self.terminal.log(self.Language[4] % Addr)
                 Thread(target=self.GetMessage, args=(Client,)).start()
+        except OSError:
+            self.terminal.log(self.Language[6])
         except Exception as e:
             self.terminal.log(f"Traceback (most recent call last):\n{format_exc().split()}{format_exception_only(type(e), e)[0].strip()}", MessageType.Error)
 
@@ -47,7 +49,7 @@ class ServerTCP(socket.socket):
                             "sender": Message["sender"]
                         })
                     self.News.append(loads(SendNews))
-                    self.terminal.log(f'{Message["sender"]}: {Message["message"]}', MessageType="Info")
+                    self.terminal.log(f'{Message["sender"]}: {Message["message"]}', MessageType.Info)
                     for client in list(self.Clients.values()):
                         client.send(SendNews.encode("utf-8"))
         except Exception as e:
