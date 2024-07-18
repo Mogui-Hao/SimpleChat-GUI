@@ -1,10 +1,25 @@
 
-import ttkbootstrap as ttk
-from ttkbootstrap.constants import *
-import config
+from os import makedirs
 from os.path import exists
 from json import dumps, loads
 from threading import Thread
+import ttkbootstrap as ttk
+from ttkbootstrap.constants import *
+import requests
+
+if not (exists("libraries")): [makedirs(f'libraries/{f}', exist_ok=True) for f in ['api', 'language']]
+makedirs("libraries/api") if not (exists("libraries/api")) else ...
+makedirs("libraries/language") if not (exists("libraries/language")) else ...
+def Dependency(File):
+    if not (exists(File)):
+        try:
+            with open(File, "w", encoding="utf-8") as f:f.write(requests.get(f"https://raw.githubusercontent.com/Mogui-Hao/SimpleChat-GUI/main/{File}").text)
+        except:
+            with open(File, "w", encoding="utf-8") as f:f.write(requests.get(f"https://gitee.com/moguihao/simple-chat-gui/raw/master/{File}").text)
+
+for f in ["config.py", "libraries/api/terminal.py", "libraries/api/terminal.pyi", "libraries/language/zh-cn.json", "libraries/client.py", "libraries/server.py"]:
+    Dependency(f)
+import config
 from libraries.api.terminal import Terminal
 from libraries.server import ServerTCP
 from libraries.client import ClientTCP
